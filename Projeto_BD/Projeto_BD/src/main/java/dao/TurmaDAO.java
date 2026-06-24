@@ -1,6 +1,7 @@
 package dao;
 
 import factory.ConnectionFactory;
+import factory.SQLLogger;
 import model.Turma;
 
 import java.sql.Connection;
@@ -24,6 +25,7 @@ public class TurmaDAO {
             stmt.setInt(3, turma.getSalaIdSala());
 
             stmt.executeUpdate();
+            SQLLogger.log("INSERT INTO Turma (nome, ano, Sala_idSala) VALUES ('" + turma.getNome() + "', " + turma.getAno() + ", " + turma.getSalaIdSala() + ")");
             System.out.println("Turma cadastrada com sucesso!");
 
         } catch (SQLException e) {
@@ -70,6 +72,7 @@ public class TurmaDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+                SQLLogger.log("UPDATE Turma SET nome = '" + turma.getNome() + "', ano = " + turma.getAno() + ", Sala_idSala = " + turma.getSalaIdSala() + " WHERE idTurma = " + turma.getIdTurma());
                 System.out.println("Turma atualizada com sucesso!");
             } else {
                 System.out.println("Nenhuma turma encontrada com esse ID.");
@@ -91,6 +94,7 @@ public class TurmaDAO {
             int linhasAfetadas = stmt.executeUpdate();
 
             if (linhasAfetadas > 0) {
+                SQLLogger.log("DELETE FROM Turma WHERE idTurma = " + idTurma);
                 System.out.println("Turma deletada com sucesso!");
             } else {
                 System.out.println("Nenhuma turma encontrada com esse ID.");

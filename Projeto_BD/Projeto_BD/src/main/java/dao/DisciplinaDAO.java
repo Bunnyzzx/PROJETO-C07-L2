@@ -1,6 +1,7 @@
 package dao;
 
 import factory.ConnectionFactory;
+import factory.SQLLogger;
 import model.Disciplina;
 
 import java.sql.Connection;
@@ -24,6 +25,7 @@ public class DisciplinaDAO {
             stmt.setInt(3, disciplina.getProfessorIdProfessor()); // Chave Estrangeira
 
             stmt.executeUpdate();
+            SQLLogger.log("INSERT INTO Disciplina (nome, carga_horaria, Professor_idProfessor) VALUES ('" + disciplina.getNome() + "', " + disciplina.getCargaHoraria() + ", " + disciplina.getProfessorIdProfessor() + ")");
             System.out.println("Disciplina cadastrada com sucesso!");
 
         } catch (SQLException e) {
@@ -70,6 +72,7 @@ public class DisciplinaDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+                SQLLogger.log("UPDATE Disciplina SET nome = '" + disciplina.getNome() + "', carga_horaria = " + disciplina.getCargaHoraria() + ", Professor_idProfessor = " + disciplina.getProfessorIdProfessor() + " WHERE idDisciplina = " + disciplina.getIdDisciplina());
                 System.out.println("Disciplina atualizada com sucesso!");
             } else {
                 System.out.println("Nenhuma disciplina encontrada com esse ID.");
@@ -91,6 +94,7 @@ public class DisciplinaDAO {
             int linhasAfetadas = stmt.executeUpdate();
 
             if (linhasAfetadas > 0) {
+                SQLLogger.log("DELETE FROM Disciplina WHERE idDisciplina = " + idDisciplina);
                 System.out.println("Disciplina deletada com sucesso!");
             } else {
                 System.out.println("Nenhuma disciplina encontrada com esse ID.");

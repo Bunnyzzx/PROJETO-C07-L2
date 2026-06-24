@@ -1,6 +1,7 @@
 package dao;
 
 import factory.ConnectionFactory;
+import factory.SQLLogger;
 import model.Professor;
 
 import java.sql.Connection;
@@ -24,6 +25,7 @@ public class ProfessorDAO {
             stmt.setString(3, professor.getEmail());
 
             stmt.executeUpdate();
+            SQLLogger.log("INSERT INTO Professor (nome, especialidade, email) VALUES ('" + professor.getNome() + "', '" + professor.getEspecialidade() + "', '" + professor.getEmail() + "')");
             System.out.println("Professor cadastrado com sucesso!");
 
         } catch (SQLException e) {
@@ -70,6 +72,7 @@ public class ProfessorDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+                SQLLogger.log("UPDATE Professor SET nome = '" + professor.getNome() + "', especialidade = '" + professor.getEspecialidade() + "', email = '" + professor.getEmail() + "' WHERE idProfessor = " + professor.getIdProfessor());
                 System.out.println("Professor atualizado com sucesso!");
             } else {
                 System.out.println("Nenhum professor encontrado com esse ID.");
@@ -91,6 +94,7 @@ public class ProfessorDAO {
             int linhasAfetadas = stmt.executeUpdate();
 
             if (linhasAfetadas > 0) {
+                SQLLogger.log("DELETE FROM Professor WHERE idProfessor = " + idProfessor);
                 System.out.println("Professor deletado com sucesso!");
             } else {
                 System.out.println("Nenhum professor encontrado com esse ID.");

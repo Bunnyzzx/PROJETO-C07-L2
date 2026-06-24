@@ -1,6 +1,7 @@
 package dao;
 
 import factory.ConnectionFactory;
+import factory.SQLLogger;
 import model.Aluno;
 
 import java.sql.Connection;
@@ -25,6 +26,7 @@ public class AlunoDAO {
             stmt.setString(3, aluno.getEmail());
 
             stmt.executeUpdate();
+            SQLLogger.log("INSERT INTO Aluno (nome, idade, email) VALUES ('" + aluno.getNome() + "', " + aluno.getIdade() + ", '" + aluno.getEmail() + "')");
             System.out.println("Aluno cadastrado com sucesso!");
 
         } catch (SQLException e) {
@@ -96,6 +98,7 @@ public class AlunoDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+                SQLLogger.log("UPDATE Aluno SET nome = '" + aluno.getNome() + "', idade = " + aluno.getIdade() + ", email = '" + aluno.getEmail() + "' WHERE idAluno = " + aluno.getIdAluno());
                 System.out.println("Aluno atualizado com sucesso!");
             } else {
                 System.out.println("Nenhum aluno encontrado com esse ID.");
@@ -117,6 +120,7 @@ public class AlunoDAO {
             int linhasAfetadas = stmt.executeUpdate();
 
             if (linhasAfetadas > 0) {
+                SQLLogger.log("DELETE FROM Aluno WHERE idAluno = " + idAluno);
                 System.out.println("Aluno deletado com sucesso!");
             } else {
                 System.out.println("Nenhum aluno encontrado com esse ID.");

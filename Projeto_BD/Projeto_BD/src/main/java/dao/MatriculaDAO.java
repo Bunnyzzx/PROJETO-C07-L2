@@ -1,6 +1,7 @@
 package dao;
 
 import factory.ConnectionFactory;
+import factory.SQLLogger;
 import model.Matricula;
 
 import java.sql.Connection;
@@ -23,6 +24,7 @@ public class MatriculaDAO {
             stmt.setInt(2, matricula.getTurmaIdTurma());
 
             stmt.executeUpdate();
+            SQLLogger.log("INSERT INTO Matricula (Aluno_idAluno, Turma_idTurma) VALUES (" + matricula.getAlunoIdAluno() + ", " + matricula.getTurmaIdTurma() + ")");
             System.out.println("Aluno matriculado com sucesso!");
 
         } catch (SQLException e) {
@@ -67,6 +69,7 @@ public class MatriculaDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+                SQLLogger.log("UPDATE Matricula SET Turma_idTurma = " + idTurmaNova + " WHERE Aluno_idAluno = " + idAluno + " AND Turma_idTurma = " + idTurmaAntiga);
                 System.out.println("Matrícula transferida com sucesso!");
             } else {
                 System.out.println("Nenhuma matrícula encontrada com esses dados para transferir.");
@@ -89,6 +92,7 @@ public class MatriculaDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+                SQLLogger.log("DELETE FROM Matricula WHERE Aluno_idAluno = " + idAluno + " AND Turma_idTurma = " + idTurma);
                 System.out.println("Matrícula removida do sistema com sucesso!");
             } else {
                 System.out.println("Nenhuma matrícula encontrada com esses IDs.");

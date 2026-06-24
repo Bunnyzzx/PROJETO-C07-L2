@@ -1,6 +1,7 @@
 package dao;
 
 import factory.ConnectionFactory;
+import factory.SQLLogger;
 import model.Sala;
 
 import java.sql.Connection;
@@ -23,6 +24,7 @@ public class SalaDAO {
             stmt.setInt(2, sala.getCapacidade());
 
             stmt.executeUpdate();
+            SQLLogger.log("INSERT INTO Sala (numero, capacidade) VALUES ('" + sala.getNumero() + "', " + sala.getCapacidade() + ")");
             System.out.println("Sala cadastrada com sucesso!");
 
         } catch (SQLException e) {
@@ -67,6 +69,7 @@ public class SalaDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+                SQLLogger.log("UPDATE Sala SET numero = '" + sala.getNumero() + "', capacidade = " + sala.getCapacidade() + " WHERE idSala = " + sala.getIdSala());
                 System.out.println("Sala atualizada com sucesso!");
             } else {
                 System.out.println("Nenhuma sala encontrada com esse ID.");
@@ -88,6 +91,7 @@ public class SalaDAO {
             int linhasAfetadas = stmt.executeUpdate();
 
             if (linhasAfetadas > 0) {
+                SQLLogger.log("DELETE FROM Sala WHERE idSala = " + idSala);
                 System.out.println("Sala deletada com sucesso!");
             } else {
                 System.out.println("Nenhuma sala encontrada com esse ID.");

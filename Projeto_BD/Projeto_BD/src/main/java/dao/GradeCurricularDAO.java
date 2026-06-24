@@ -1,6 +1,7 @@
 package dao;
 
 import factory.ConnectionFactory;
+import factory.SQLLogger;
 import model.GradeCurricular;
 
 import java.sql.Connection;
@@ -23,6 +24,7 @@ public class GradeCurricularDAO {
             stmt.setInt(2, grade.getDisciplinaIdDisciplina());
 
             stmt.executeUpdate();
+            SQLLogger.log("INSERT INTO Grade_Curricular (Turma_idTurma, Disciplina_idDisciplina) VALUES (" + grade.getTurmaIdTurma() + ", " + grade.getDisciplinaIdDisciplina() + ")");
             System.out.println("Disciplina vinculada à turma com sucesso na Grade Curricular!");
 
         } catch (SQLException e) {
@@ -66,6 +68,7 @@ public class GradeCurricularDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+                SQLLogger.log("UPDATE Grade_Curricular SET Disciplina_idDisciplina = " + idDisciplinaNova + " WHERE Turma_idTurma = " + idTurma + " AND Disciplina_idDisciplina = " + idDisciplinaAntiga);
                 System.out.println("Grade curricular atualizada com sucesso!");
             } else {
                 System.out.println("Nenhum registro encontrado com esses IDs para atualizar.");
@@ -88,6 +91,7 @@ public class GradeCurricularDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+                SQLLogger.log("DELETE FROM Grade_Curricular WHERE Turma_idTurma = " + idTurma + " AND Disciplina_idDisciplina = " + idDisciplina);
                 System.out.println("Vínculo deletado da Grade Curricular com sucesso!");
             } else {
                 System.out.println("Nenhum registro encontrado com esses IDs.");
